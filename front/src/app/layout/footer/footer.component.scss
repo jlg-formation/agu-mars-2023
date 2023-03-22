@@ -1,0 +1,17 @@
+footer {
+  height: 3em;
+  background: #eee;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    text-decoration: inherit;
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
