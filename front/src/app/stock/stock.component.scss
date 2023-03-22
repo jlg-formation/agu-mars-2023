@@ -1,0 +1,17 @@
+div.content {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+}
+
+nav {
+  display: flex;
+  gap: 0.3em;
+}
+
+tbody {
+  td.qty,
+  td.price {
+    text-align: right;
+  }
+}
