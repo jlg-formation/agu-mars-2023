@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Article } from '../interfaces/article';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-stock',
@@ -7,10 +7,9 @@ import { Article } from '../interfaces/article';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent implements OnDestroy {
-  articles: Article[] = [
-    { id: 'a1', name: 'Pelle', price: 3.99, qty: 123 },
-    { id: 'a2', name: 'Marteau', price: 5, qty: 34 },
-  ];
+  constructor(protected readonly articleService: ArticleService) {
+    console.log('articleService: ', articleService);
+  }
 
   ngOnDestroy(): void {
     console.log('au revoir...');
