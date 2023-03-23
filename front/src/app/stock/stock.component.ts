@@ -6,6 +6,7 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../interfaces/article';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -24,6 +25,19 @@ export class StockComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log('au revoir...');
+  }
+
+  remove() {
+    console.log('remove');
+    const ids = [...this.selectArticles].map((a) => a.id);
+    this.articleService
+      .remove(ids)
+      .pipe(
+        tap(() => {
+          this.selectArticles.clear();
+        })
+      )
+      .subscribe();
   }
 
   select(a: Article) {
