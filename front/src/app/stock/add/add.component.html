@@ -13,8 +13,11 @@
       <span>Quantité</span>
       <input type="number" formControlName="qty" />
     </label>
-    <button class="primary" [disabled]="f.invalid">
-      <fa-icon [icon]="faPlus"></fa-icon>
+    <button class="primary" [disabled]="f.invalid || isAdding">
+      <fa-icon
+        [icon]="isAdding ? faCircleNotch : faPlus"
+        [spin]="isAdding"
+      ></fa-icon>
       <span>Ajouter</span>
     </button>
   </form>
