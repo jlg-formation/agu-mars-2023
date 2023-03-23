@@ -37,6 +37,9 @@ export class ArticleService {
     return of(undefined).pipe(
       delay(2000),
       tap(() => {
+        if (newArticle.name === 'Trucx') {
+          throw new Error('Trucx is not permitted.');
+        }
         this.articles$.value.push({
           id: generateId(),
           ...newArticle,
