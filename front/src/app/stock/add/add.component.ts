@@ -8,8 +8,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./add.component.scss'],
 })
 export class AddComponent {
-  faPlus = faPlus;
-
   f = new FormGroup({
     name: new FormControl('Truc', [
       Validators.required,
@@ -18,4 +16,9 @@ export class AddComponent {
     price: new FormControl(0, [Validators.required]),
     qty: new FormControl(0, [Validators.required]),
   });
+  faPlus = faPlus;
+
+  submit() {
+    console.log('submit');
+  }
 }
