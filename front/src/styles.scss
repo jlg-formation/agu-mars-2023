@@ -29,3 +29,10 @@ main {
     width: 100%;
   }
 }
+
+div.error {
+  height: 2em;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}

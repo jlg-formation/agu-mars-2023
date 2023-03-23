@@ -57,6 +57,9 @@ export class ArticleService {
     return of(undefined).pipe(
       delay(2000),
       tap(() => {
+        if (ids.length === 2) {
+          throw new Error("interdit d'enlever 2 articles a la fois");
+        }
         this.articles$.next(
           this.articles$.value.filter((a) => !ids.includes(a.id))
         );

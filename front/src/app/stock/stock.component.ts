@@ -4,9 +4,10 @@ import {
   faRotateRight,
   faPlus,
   faTrashAlt,
+  faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../interfaces/article';
-import { tap } from 'rxjs';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -17,6 +18,11 @@ export class StockComponent implements OnDestroy {
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
+  faCircleNotch = faCircleNotch;
+
+  isRemoving = false;
+  errorMsg = '';
+
   selectArticles = new Set<Article>();
 
   constructor(protected readonly articleService: ArticleService) {
@@ -30,11 +36,25 @@ export class StockComponent implements OnDestroy {
   remove() {
     console.log('remove');
     const ids = [...this.selectArticles].map((a) => a.id);
-    this.articleService
-      .remove(ids)
+    of(undefined)
       .pipe(
         tap(() => {
+          this.errorMsg = '';
+          this.isRemoving = true;
+        }),
+        switchMap(() => {
+          return this.articleService.remove(ids);
+        }),
+        tap(() => {
           this.selectArticles.clear();
+        }),
+        finalize(() => {
+          this.isRemoving = false;
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          this.errorMsg = err.message;
+          return of(undefined);
         })
       )
       .subscribe();

@@ -12,10 +12,17 @@
         title="Supprimer"
         [hidden]="selectArticles.size === 0"
         (click)="remove()"
+        [disabled]="isRemoving"
       >
-        <fa-icon [icon]="faTrashAlt"></fa-icon>
+        <fa-icon
+          [icon]="isRemoving ? faCircleNotch : faTrashAlt"
+          [spin]="isRemoving"
+        ></fa-icon>
       </button>
     </nav>
+    <div class="error">
+      {{ errorMsg }}
+    </div>
     <table>
       <thead>
         <tr>
