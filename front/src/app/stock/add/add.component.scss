@@ -3,6 +3,9 @@ form {
   flex-flow: column;
   gap: 0.5em;
 
+  width: 100%;
+  max-width: 25em;
+
   label {
     display: flex;
     flex-flow: column;
