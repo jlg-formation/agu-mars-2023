@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { Article } from '../interfaces/article';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  articles$ = new BehaviorSubject<Article[]>([
+  private articles$ = new BehaviorSubject<Article[]>([
     { id: 'a1', name: 'Pelle', price: 3.99, qty: 123 },
     { id: 'a2', name: 'Marteau', price: 5, qty: 34 },
   ]);
+
+  getArticles(): Observable<Article[]> {
+    return this.articles$.pipe(distinctUntilChanged());
+  }
 
   constructor() {
     setTimeout(() => {
