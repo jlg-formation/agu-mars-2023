@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AutofocusDirective } from './autofocus.directive';
+import { EllipsisPipe } from './ellipsis.pipe';
 
 
 
 @NgModule({
   declarations: [
-    AutofocusDirective
+    AutofocusDirective,
+    EllipsisPipe
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    AutofocusDirective
+    AutofocusDirective,
+    EllipsisPipe
   ]
 })
 export class WidgetsModule { }
