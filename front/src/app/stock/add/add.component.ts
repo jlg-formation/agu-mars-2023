@@ -49,12 +49,15 @@ export class AddComponent {
           return this.articleService.add(newArticle);
         }),
         switchMap(() => {
+          return this.articleService.refresh();
+        }),
+        switchMap(() => {
           return this.router.navigate(['..'], { relativeTo: this.route });
         }),
         finalize(() => (this.isAdding = false)),
         catchError((err) => {
           console.log('err: ', err);
-          this.errorMsg = err.message;
+          this.errorMsg = 'Erreur Technique';
           return of(undefined);
         })
       )

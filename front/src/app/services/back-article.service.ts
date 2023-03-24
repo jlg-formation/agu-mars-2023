@@ -10,7 +10,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { Article } from '../interfaces/article';
+import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
 const url = 'http://localhost:3000/api/articles';
@@ -43,6 +43,19 @@ export class BackArticleService extends ArticleService {
         console.log('err: ', err);
         this.errorMsg = 'Erreur Technique';
         return of(undefined);
+      })
+    );
+  }
+
+  override add(newArticle: NewArticle): Observable<void> {
+    return this.http.post<void>(url, newArticle);
+  }
+
+  override refresh(): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => this.http.get<Article[]>(url)),
+      map((articles) => {
+        this.articles$.next(articles);
       })
     );
   }
