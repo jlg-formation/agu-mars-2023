@@ -1,13 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ArticleService } from '../services/article.service';
 import {
-  faRotateRight,
-  faPlus,
-  faTrashAlt,
   faCircleNotch,
+  faPlus,
+  faRotateRight,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { Article } from '../interfaces/article';
 import { catchError, finalize, of, switchMap, tap } from 'rxjs';
+import { Article } from '../interfaces/article';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-stock',
@@ -15,14 +15,13 @@ import { catchError, finalize, of, switchMap, tap } from 'rxjs';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent implements OnDestroy {
+  errorMsg = '';
+  faCircleNotch = faCircleNotch;
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
-  faCircleNotch = faCircleNotch;
-
   isRemoving = false;
-  errorMsg = '';
-
+  isRefreshing = false;
   selectArticles = new Set<Article>();
 
   constructor(protected readonly articleService: ArticleService) {
@@ -31,6 +30,29 @@ export class StockComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log('au revoir...');
+  }
+
+  refresh() {
+    console.log('refresh');
+    of(undefined)
+      .pipe(
+        tap(() => {
+          this.errorMsg = '';
+          this.isRefreshing = true;
+        }),
+        switchMap(() => {
+          return this.articleService.refresh();
+        }),
+        finalize(() => {
+          this.isRefreshing = false;
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          this.errorMsg = err.message;
+          return of(undefined);
+        })
+      )
+      .subscribe();
   }
 
   remove() {

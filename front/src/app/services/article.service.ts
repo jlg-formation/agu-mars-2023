@@ -8,6 +8,7 @@ import {
   of,
   switchMap,
   tap,
+  timer,
 } from 'rxjs';
 import { generateId } from 'src/misc';
 import { Article, NewArticle } from '../interfaces/article';
@@ -20,18 +21,6 @@ export class ArticleService {
     { id: 'a1', name: 'Pelle', price: 3.99, qty: 123 },
     { id: 'a2', name: 'Marteau', price: 5, qty: 34 },
   ]);
-
-  constructor() {
-    setTimeout(() => {
-      this.articles$.value.push({
-        id: 'a3',
-        name: 'Truc',
-        price: 3.99,
-        qty: 123,
-      });
-      this.articles$.next(this.articles$.value);
-    }, 2000);
-  }
 
   add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
@@ -51,6 +40,10 @@ export class ArticleService {
 
   getArticles(): Observable<Article[]> {
     return this.articles$.pipe(distinctUntilChanged());
+  }
+
+  refresh(): Observable<void> {
+    return of(undefined).pipe(delay(2000));
   }
 
   remove(ids: string[]): Observable<void> {
