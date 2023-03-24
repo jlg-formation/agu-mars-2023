@@ -19,10 +19,7 @@ import { Article, NewArticle } from '../interfaces/article';
 export class ArticleService {
   isLoading = false;
   errorMsg = '';
-  protected articles$ = new BehaviorSubject<Article[]>([
-    { id: 'a1', name: 'Pelle', price: 3.99, qty: 123 },
-    { id: 'a2', name: 'Marteau', price: 5, qty: 34 },
-  ]);
+  protected articles$ = new BehaviorSubject<Article[]>([]);
 
   add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(

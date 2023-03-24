@@ -13,6 +13,13 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 
 app.use(logger)
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  // res.setHeader('', '')
+  // res.setHeader('', '')
+  next()
+})
+
 app.use('/api', api)
 
 app.use(express.static('.'))
