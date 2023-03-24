@@ -59,4 +59,13 @@ export class BackArticleService extends ArticleService {
       })
     );
   }
+
+  override remove(ids: string[]): Observable<void> {
+    return this.http.delete<void>(url, {
+      body: ids,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
