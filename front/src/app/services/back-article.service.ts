@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import {
+  catchError,
+  delay,
+  finalize,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
@@ -17,10 +26,23 @@ export class BackArticleService extends ArticleService {
   }
 
   loadArticles(): Observable<void> {
-    return this.http.get<Article[]>(url).pipe(
+    return of(undefined).pipe(
+      tap(() => {
+        this.errorMsg = '';
+        this.isLoading = true;
+      }),
+      delay(2000),
+      switchMap(() => this.http.get<Article[]>(url)),
       map((articles) => {
         this.articles$.next(articles);
-        return;
+      }),
+      finalize(() => {
+        this.isLoading = false;
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        this.errorMsg = 'Erreur Technique';
+        return of(undefined);
       })
     );
   }

@@ -14,3 +14,9 @@ tbody {
     text-align: right;
   }
 }
+
+div.loading {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+}

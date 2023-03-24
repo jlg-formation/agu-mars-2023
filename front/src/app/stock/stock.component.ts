@@ -89,4 +89,11 @@ export class StockComponent implements OnDestroy {
     }
     this.selectArticles.add(a);
   }
+
+  getErrorMsg() {
+    if (this.errorMsg !== '') {
+      return this.errorMsg;
+    }
+    return this.articleService.errorMsg;
+  }
 }
