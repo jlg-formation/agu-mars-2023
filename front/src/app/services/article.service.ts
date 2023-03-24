@@ -3,12 +3,9 @@ import {
   BehaviorSubject,
   delay,
   distinctUntilChanged,
-  map,
   Observable,
   of,
-  switchMap,
   tap,
-  timer,
 } from 'rxjs';
 import { generateId } from 'src/misc';
 import { Article, NewArticle } from '../interfaces/article';
