@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 import { StockComponent } from './stock.component';
 
@@ -8,9 +9,9 @@ describe('StockComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StockComponent ]
-    })
-    .compileComponents();
+      imports: [FontAwesomeTestingModule],
+      declarations: [StockComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StockComponent);
     component = fixture.componentInstance;
